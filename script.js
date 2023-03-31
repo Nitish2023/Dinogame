@@ -79,7 +79,7 @@ let isAlive = setInterval(function () {
     document.getElementById("song").pause();
     clearInterval(interval);
     playerScore = 0;
-    cactus.style.animationDuration = "4s";
+//     cactus.style.animationDuration = "4s";
     document.getElementById("dimg").src = "loser.png";
     document.getElementById("fimg").src = "fly.png";
 
