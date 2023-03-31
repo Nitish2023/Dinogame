@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Dino World</title>
+
+
+    <link rel="stylesheet" href="styles.css">
+
+
+</head>
+
+<body>
+    <section class="main">
+        <div class="form_wrapper">
+            <input type="radio" class="radio" name="radio" id="login" checked />
+            <input type="radio" class="radio" name="radio" id="signup" />
+            <div class="tile">
+                <h3 class="login">Login Form</h3>
+                <h3 class="signup">Signup Form</h3>
+            </div>
+
+            <label class="tab login_tab" for="login">
+                Login
+            </label>
+
+            <label class="tab signup_tab" for="signup">
+                Signup
+            </label>
+            <span class="shape"></span>
+            <div class="form_wrap">
+                <div class="form_fild login_form">
+                    <div class="input_group">
+                        <input type="email" id="email1" class="input" placeholder="Email Address" />
+                    </div>
+                    <div class="input_group">
+                        <input type="password" id="password1" class="input" placeholder="Password" />
+                    </div>
+
+                    <input type="submit" id="login1" class="btn" value="Login" />
+
+                    <div class="not_mem">
+                        <label for="signup">Don't have an account? <span> Signup now</span></label>
+                    </div>
+
+                </div>
+
+                <div class="form_fild signup_form">
+                    <div class="input_group">
+                        <input type="name" class="input" id="username" placeholder="Username">
+                    </div>
+                    <div class="input_group">
+                        <input type="email" class="input" id="email" placeholder="Email Address" />
+                    </div>
+                    <div class="input_group">
+                        <input type="password" class="input" id="password" placeholder="Password" />
+                    </div>
+
+
+
+                    <input type="submit" id="signup1" class="btn" value="Signup" />
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+</body>
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-app.js";
+    import { getDatabase, ref, set, update, onValue, get } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-database.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.18.0/firebase-auth.js";
+   
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+        // config code
+        apiKey: "AIzaSyC4tayKDotk1g4qIydb2VQW6yVXkTueKjM",
+        authDomain: "dinosaur-game-b335a.firebaseapp.com",
+        databaseURL: "https://dinosaur-game-b335a-default-rtdb.firebaseio.com",
+        projectId: "dinosaur-game-b335a",
+        storageBucket: "dinosaur-game-b335a.appspot.com",
+        messagingSenderId: "570310138096",
+        appId: "1:570310138096:web:75aa28bef0fc0b0ec08a35"
+       
+    
+    
+    };
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+    const auth = getAuth();
+
+    let signup1 = document.getElementById('signup1')
+    signup1.addEventListener('click', (e) => {
+
+        var email = document.getElementById('email').value;
+        var password = document.getElementById('password').value;
+        var username = document.getElementById('username').value;
+
+        createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                // Signed in 
+                const user = userCredential.user;
+
+                set(ref(database, 'users/' + user.uid),{
+                username: username,
+                email: email ,
+                highscore : "0"
+            })
+
+                alert('successfully registered ! Login to continue.');
+                // location.replace("main.html")
+
+            
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+
+                alert(errorMessage);
+                // ..
+            });
+
+
+
+    });
+
+    login1.addEventListener('click', (e) => {
+
+        var email = document.getElementById('email1').value
+        var password = document.getElementById('password1').value
+
+
+        signInWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                // Signed in
+                const user = userCredential.user;
+                // ...
+
+                // save log in details into real time database
+                var lgDate = new Date();
+                update(ref(database, 'users/' + user.uid), {
+                    last_login: lgDate,
+                })
+
+                    .then(() => {
+                        // Data saved successfully!
+                        alert(' logged in successfully !');
+                        location.replace("main.html")
+
+                    })
+                    .catch((error) => {
+                        // The write failed...
+                        alert(error);
+                    });
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                alert(errorMessage);
+            })
+    });
+    const user = auth.currentUser;
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    
+    const uid = user.uid;
+   
+  } else {
+    // User is signed out
+   
+  }
+});
+
+</script>
+
+</html>
+
+</html>
