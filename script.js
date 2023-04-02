@@ -100,10 +100,10 @@ setInterval(() => {
 
   if (cactusLeft < 10) {
 
-    aniDur = parseFloat(window.getComputedStyle(cactus).getPropertyValue('animation-duration'));
+    animationDur = parseFloat(window.getComputedStyle(cactus).getPropertyValue('animation-duration'));
 
     // bDur = bDur + 0.1;
-    newDur = aniDur - .05;
+    newDur = animationDur - .05;
     cactus.style.animationDuration = newDur + 's';
 
     console.log(newDur);
