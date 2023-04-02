@@ -23,7 +23,6 @@ window.addEventListener("keydown", (start) => {
     gameover.style.display = "none";
     cactus.classList.add("cactusActive");
     fly.classList.add("flyActive");
-    body.classList.add("back");
     road.firstElementChild.style.animation = "roadAnimate 1.5s linear infinite";
     document.getElementById("dimg").src = "dino.gif";
     document.getElementById("fimg").src = "fly.gif";
@@ -84,7 +83,7 @@ let isAlive = setInterval(function () {
     document.getElementById("fimg").src = "fly.png";
 
   }
-}, 10);
+}, 100);
 
 
 
