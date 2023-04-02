@@ -83,15 +83,15 @@
             const data = snapshot.val();
             document.getElementById("username").innerHTML = data.username
             
-            let high = 0;
-           let high1 = data.highscore
-            console.log(high1)
+            let high1 = 0;
+           let high2 = data.highscore
+            console.log(high2)
             setInterval(() => {
-   high = Math.max(high,playerScore);
-   high1 = Math.max(high1,high)
- highscore.innerHTML ="High score :" + high1;
+   high1 = Math.max(high1,playerScore);
+   high2 = Math.max(high2,high1)
+ highscore.innerHTML ="High score :" + high2;
  update(ref(database, 'users/' + uid), {
-            highscore : high1
+            highscore : high2
           });
 }, 50);
         });
